@@ -1,0 +1,56 @@
+# Maven
+target/
+HELP.md
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+# Eclipse
+.settings/
+.metadata/
+bin/
+tmp/
+*.project
+*.classpath
+*.prefs
+*.tmp
+*.bak
+*.swp
+*~.nib
+.factorypath
+.loadpath
+local.properties
+
+# Intellij
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/*
+*.code-workspace
+.history/
+
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+# Configuration / Credentials
+.config/
+
+# Mac
+.DS_Store
