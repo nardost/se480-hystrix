@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Component
@@ -24,6 +25,7 @@ public class UserLoader {
         Stream.of(USERS).forEach(u -> {
             try {
                 User user = new User(
+                        UUID.randomUUID().toString(),
                         u[0],
                         u[1],
                         Integer.parseInt(u[2]));

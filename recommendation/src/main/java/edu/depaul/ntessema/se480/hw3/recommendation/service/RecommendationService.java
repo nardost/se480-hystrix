@@ -10,20 +10,15 @@ import java.util.List;
 public class RecommendationService {
 
     private final MovieService movieService;
+    private final UserService userService;
 
     @Autowired
-    public RecommendationService(MovieService service) {
+    public RecommendationService(MovieService service, RestClientUserService userService) {
         this.movieService = service;
+        this.userService = userService;
     }
 
     public List<Movie> getRecommendedMovies(final String authToken) {
-        /*
-         * TODO
-         *  1. Request: user service with token.
-         *  2. Response: user details based on auth token.
-         *  3. Extract age from user details
-         */
-        final int age = Integer.parseInt(authToken.split("\\.")[1]);
-        return movieService.findByAgeGroup(age);
+        return movieService.findByAgeGroup(userService.getAuthenticatedUserDetail(authToken).getAge());
     }
 }

@@ -26,4 +26,12 @@ public class UserService {
     public User findById(String id) {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
+
+    public User findByUsername(String username) {
+        User user = repository.findFirstByUsername(username);
+        if(user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return user;
+    }
 }
