@@ -1,0 +1,5 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "Movie Recommender: SE480 - HW3"

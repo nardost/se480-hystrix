@@ -5,7 +5,8 @@
 	<modules>
 		<module>user</module>
 		<module>recommendation</module>
-	</modules>
+        <module>ui</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
