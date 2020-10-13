@@ -39,6 +39,7 @@ public class UserLoader {
     private static final String[][] USERS = new String[][] {
             // { username, password, age }
             { "joseph", "joseph", "6"},
+            { "nanu", "nanu", "14"},
             { "nardos", "nardos", "20" },
             { "kebede", "kebede", "30" },
             { "menelik", "menelik", "60" }

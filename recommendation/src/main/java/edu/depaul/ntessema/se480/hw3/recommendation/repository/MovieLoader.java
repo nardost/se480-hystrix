@@ -40,6 +40,8 @@ public class MovieLoader {
             { "Shrek", "0", "13" },
             { "Coco", "0", "13" },
             { "The Incredibles", "0", "13" },
+            { "Shark Tale", "0", "13" },
+            { "The Lion King", "0", "13" },
             { "The Avengers", "13", "17" },
             { "The Dark Knight", "13", "17" },
             { "Inception", "13", "17" },
