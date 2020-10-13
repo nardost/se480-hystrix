@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,10 +26,9 @@ public class RecommendationController {
     }
 
     @GetMapping("/recommend")
-    public List<ResponseEntity<Movie>> recommend(@RequestHeader("x-auth-token") final String authToken) {
+    public ResponseEntity<List<Movie>> recommend(@RequestHeader("x-auth-token") final String authToken) {
         List<Movie> recommendedMovies= recommendationService.getRecommendedMovies(authToken);
-        List<ResponseEntity<Movie>> responseEntities = new ArrayList<>();
-        recommendedMovies.forEach(movie -> responseEntities.add(new ResponseEntity<>(movie, HttpStatus.OK)));
-        return responseEntities;
+        ResponseEntity<List<Movie>> responseEntity = new ResponseEntity<>(recommendedMovies, HttpStatus.OK);
+        return responseEntity;
     }
 }

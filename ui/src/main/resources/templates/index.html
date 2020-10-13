@@ -13,7 +13,7 @@
                         </div>
                         <input type="text" name="username" th:field="*{username}" class="form-control border-info" placeholder="Username" aria-label="Username" aria-describedby="login-inputGroup-username">
                         <div class="input-group-prepend">
-                            <span class="bg-white input-group-text text-info border-info" id="login-inputGroup-password"><i class="fas fa-key"></i></span>
+                            <span class="bg-white input-group-text text-info border-info border-left-0" id="login-inputGroup-password"><i class="fas fa-key"></i></span>
                         </div>
                         <input type="password" name="password" th:field="*{password}" class="form-control border-info" placeholder="Password" aria-label="Password" aria-describedby="login-inputGroup-password">
                         <div class="input-group-append">
@@ -33,7 +33,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film"></i> [[${movies[index].title}]]</h5>
-                                <p class="card-text" th:inline="text">[[${movies[index].title}]]</p>
+                                <p class="font-weight-light text-muted card-text" th:inline="text">
+                                    Rated for  <span class="h3 text-info">[[${movies[index + 1].ageGroup}]]</span>
+                                </p>
                                 <div class="d-flex justify-content-start">
                                     <a href="#" class="btn btn-danger"><i class="fas fa-play"></i> Play Movie</a>
                                 </div>
@@ -53,7 +55,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film"></i> [[${movies[index + 1].title}]]</h5>
-                                <p class="card-text" th:inline="text">[[${movies[index + 1].title}]]</p>
+                                <p class="font-weight-light text-muted card-text" th:inline="text">
+                                    Rated for  <span class="h3 text-info">[[${movies[index + 1].ageGroup}]]</span>
+                                </p>
                                 <div class="d-flex justify-content-start">
                                     <a href="#" class="btn btn-danger"><i class="fas fa-play"></i> Play Movie</a>
                                 </div>
@@ -73,7 +77,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film"></i> [[${movies[index + 2].title}]]</h5>
-                                <p class="card-text" th:inline="text">[[${movies[index + 2].title}]]</p>
+                                <p class="font-weight-light text-muted card-text" th:inline="text">
+                                    Rated for  <span class="h3 text-info">[[${movies[index + 1].ageGroup}]]</span>
+                                </p>
                                 <div class="d-flex justify-content-start">
                                     <a href="#" class="btn btn-danger"><i class="fas fa-play"></i> Play Movie</a>
                                 </div>

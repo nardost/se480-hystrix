@@ -17,12 +17,12 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class TokenBasedAuthenticationService implements UserService {
+public class SimpleAuthenticationService implements AuthenticationService {
 
     private final RestTemplate restTemplate;
 
     @Autowired
-    public TokenBasedAuthenticationService(RestTemplate restTemplate) {
+    public SimpleAuthenticationService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
