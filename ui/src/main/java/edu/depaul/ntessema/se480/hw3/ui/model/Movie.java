@@ -13,5 +13,4 @@ public class Movie {
     private String title;
     private int minimumAge;
     private int maximumAge;
-    private String ageGroup;
 }

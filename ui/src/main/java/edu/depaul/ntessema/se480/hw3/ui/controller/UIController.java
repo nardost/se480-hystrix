@@ -39,6 +39,13 @@ public class UIController {
 
     @GetMapping("/")
     public String home(Model model) {
+        /*
+         * TODO
+         *  The flash attribute redirected
+         *  from the POST endpoint /recommend
+         *  can be retrieved as follows:
+         *  model.asMap().get("movies")
+         */
         model.addAttribute("applicationName", applicationName);
         model.addAttribute("user", new User());
         return "index";
@@ -48,11 +55,21 @@ public class UIController {
     public String recommendMovies(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
         final String authToken = userService.authenticate(user);
         final List<Movie> recommendedMovies = recommendationService.getRecommendations(authToken);
-        recommendedMovies.forEach(movie -> {
-            int maximumAge = movie.getMaximumAge();
-            String ageCategory = maximumAge == 13 ? "Kids" : maximumAge == 17 ? "Teens" : "Adults";
-            movie.setAgeGroup(ageCategory);
-        });
+        /*
+         * Define some theme for the recommendation category based on
+         * the first movie in the list or an empty Movie object.
+         */
+        final int maximumAge = recommendedMovies.stream().findFirst().orElse(new Movie()).getMaximumAge();
+        final String theme = maximumAge <= 13 ? "Kids" : maximumAge == 17 ? "Teens" : "Adults";
+        /*
+         * PRG redirection: POST, Redirect, GET to avoid
+         * accidentally rePOSTing on browser refresh.
+         * Use RedirectAttributes and add flash attributes
+         * that last only for the duration of the redirection.
+         * RedirectAttributes is a Model, so the next controller
+         * mapping will get the movies attribute...
+         */
+        redirectAttributes.addFlashAttribute("theme", theme);
         redirectAttributes.addFlashAttribute("movies", recommendedMovies);
         return "redirect:/";
     }
