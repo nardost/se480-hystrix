@@ -9,11 +9,17 @@ import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -39,15 +45,15 @@ public class UIController {
     }
 
     @PostMapping("/recommend")
-    public String recommendMovies(@ModelAttribute User user, Model model) {
+    public String recommendMovies(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
         final String authToken = userService.authenticate(user);
         final List<Movie> recommendedMovies = recommendationService.getRecommendations(authToken);
-        recommendedMovies.stream().forEach(movie -> {
+        recommendedMovies.forEach(movie -> {
             int maximumAge = movie.getMaximumAge();
             String ageCategory = maximumAge == 13 ? "Kids" : maximumAge == 17 ? "Teens" : "Adults";
             movie.setAgeGroup(ageCategory);
         });
-        model.addAttribute("movies", recommendedMovies);
-        return "index";
+        redirectAttributes.addFlashAttribute("movies", recommendedMovies);
+        return "redirect:/";
     }
 }
