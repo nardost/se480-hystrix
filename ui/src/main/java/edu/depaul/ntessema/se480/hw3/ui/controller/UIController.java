@@ -32,7 +32,9 @@ public class UIController {
     private final RecommendationService recommendationService;
 
     @Autowired
-    public UIController(AuthenticationService userService, RecommendationService recommendationService) {
+    public UIController(
+            AuthenticationService userService,
+            RecommendationService recommendationService) {
         this.userService = userService;
         this.recommendationService = recommendationService;
     }
@@ -52,15 +54,17 @@ public class UIController {
     }
 
     @PostMapping("/recommend")
-    public String recommendMovies(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+    public String recommendMovies(
+            @ModelAttribute User user,
+            RedirectAttributes redirectAttributes) {
         final String authToken = userService.authenticate(user);
         final List<Movie> recommendedMovies = recommendationService.getRecommendations(authToken);
         /*
-         * Define some theme for the recommendation category based on
-         * the first movie in the list or an empty Movie object.
+         * Define theme for the recommendation category.
+         * Get first movie and use the max age, (or maxAge = 0 if no movies are there).
          */
         final int maximumAge = recommendedMovies.stream().findFirst().orElse(new Movie()).getMaximumAge();
-        final String theme = maximumAge <= 13 ? "Kids" : maximumAge == 17 ? "Teens" : "Adults";
+        final String theme = maximumAge <= 13 ? "kids" : maximumAge == 17 ? "teens" : "adults";
         /*
          * PRG redirection: POST, Redirect, GET to avoid
          * accidentally rePOSTing on browser refresh.

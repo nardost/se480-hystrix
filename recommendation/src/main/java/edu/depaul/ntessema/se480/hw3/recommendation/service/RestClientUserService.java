@@ -26,7 +26,7 @@ public class RestClientUserService implements UserService {
 
     @Override
     public User getAuthenticatedUserDetail(String authToken) {
-        final String AUTH_USER_ENDPOINT = "http://localhost:8081/v1/auth-user";
+        final String AUTH_USER_ENDPOINT = "http://localhost:8081/v1/user-detail";
         /*
          * REST Web Client
          */

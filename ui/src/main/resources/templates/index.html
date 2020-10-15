@@ -30,15 +30,15 @@
             <!-- ${movies} looks undefined because of redirection in the controller.  -->
             <div th:if="${movies ne null}">
                 <!-- th:with must appear only once per element, hence the very long line of definition. -->
-                <div  class="row row-cols-1 row-cols-md-3"
-                      th:each="index : ${#numbers.sequence(0, #lists.size(movies), 3)}"
-                      th:with="themeTextColor=${theme == 'Kids' ? 'text-success' : theme == 'Teens' ? 'text-primary' : 'text-danger'}, themeButtonColor=${theme == 'Kids' ? 'btn-success' : theme == 'Teens' ? 'btn-primary' : 'btn-danger'}">
+                <div class="row row-cols-1 row-cols-md-3"
+                     th:each="index : ${#numbers.sequence(0, #lists.size(movies), 3)}"
+                     th:with="themeTextColor=${theme == 'kids' ? 'text-success' : theme == 'teens' ? 'text-primary' : 'text-danger'}, themeButtonColor=${theme == 'kids' ? 'btn-success' : theme == 'teens' ? 'btn-primary' : 'btn-danger'}">
                     <div th:if="${index < #lists.size(movies)}" class="col mb-4">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film" th:classappend="${themeTextColor}"></i> [[${movies[index].title}]]</h5>
                                 <p class="font-weight-light text-muted card-text" th:inline="text">
-                                    This movies is rated for <span class="h4" th:classappend="${themeTextColor}">[[${theme}]]</span>
+                                    This movie is rated for <span class="h4" th:classappend="${themeTextColor}">[[${theme}]]</span>
                                 </p>
                                 <div class="d-flex justify-content-start">
                                     <a href="#" class="btn" th:classappend="${themeButtonColor}"><i class="fas fa-play"></i> Play Movie</a>
@@ -60,7 +60,7 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film" th:classappend="${themeTextColor}"></i> [[${movies[index + 1].title}]]</h5>
                                 <p class="font-weight-light text-muted card-text" th:inline="text">
-                                    This movies is rated for <span class="h4" th:classappend="${themeTextColor}">[[${theme}]]</span>
+                                    This movie is rated for <span class="h4" th:classappend="${themeTextColor}">[[${theme}]]</span>
                                 </p>
                                 <div class="d-flex justify-content-start">
                                     <a href="#" class="btn" th:classappend="${themeButtonColor}"><i class="fas fa-play"></i> Play Movie</a>
@@ -82,7 +82,7 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film" th:classappend="${themeTextColor}"></i> [[${movies[index + 2].title}]]</h5>
                                 <p class="font-weight-light text-muted card-text" th:inline="text">
-                                    This movies is rated for <span class="h4" th:classappend="${themeTextColor}">[[${theme}]]</span>
+                                    This movie is rated for <span class="h4" th:classappend="${themeTextColor}">[[${theme}]]</span>
                                 </p>
                                 <div class="d-flex justify-content-start">
                                     <a href="#" class="btn" th:classappend="${themeButtonColor}"><i class="fas fa-play"></i> Play Movie</a>

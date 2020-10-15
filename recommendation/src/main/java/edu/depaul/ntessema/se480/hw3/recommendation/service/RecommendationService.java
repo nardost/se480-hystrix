@@ -13,7 +13,7 @@ public class RecommendationService {
     private final UserService userService;
 
     @Autowired
-    public RecommendationService(MovieService service, RestClientUserService userService) {
+    public RecommendationService(MovieService service, UserService userService) {
         this.movieService = service;
         this.userService = userService;
     }

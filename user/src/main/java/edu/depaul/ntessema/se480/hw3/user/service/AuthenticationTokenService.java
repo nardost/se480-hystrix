@@ -16,6 +16,9 @@ import java.util.Objects;
 @Slf4j
 public class AuthenticationTokenService {
 
+    /**
+     * Store issued token here.
+     */
     private final Map<String, String> issuedTokens = new HashMap<>();
 
     private final UserService userService;

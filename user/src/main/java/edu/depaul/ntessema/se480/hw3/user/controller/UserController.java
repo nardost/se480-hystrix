@@ -33,11 +33,9 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<ResponseEntity<User>> getUsers() {
-        List<ResponseEntity<User>> userEntities = new ArrayList<>();
+    public ResponseEntity<List<User>> getUsers() {
         List<User> users = userService.findAll();
-        users.forEach(user -> userEntities.add(new ResponseEntity<>(user, HttpStatus.OK)));
-        return userEntities;
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
@@ -67,8 +65,8 @@ public class UserController {
         return ResponseEntity.ok().headers(responseHeaders).body("");
     }
 
-    @GetMapping("/auth-user")
-    public ResponseEntity<User> authenticatedUser(@RequestHeader("x-auth-token") final String authToken) {
+    @GetMapping("/user-detail")
+    public ResponseEntity<User> authenticatedUserDetail(@RequestHeader("x-auth-token") final String authToken) {
         return new ResponseEntity<>(authTokenService.getAuthenticatedUserDetail(authToken), HttpStatus.OK);
     }
 }
