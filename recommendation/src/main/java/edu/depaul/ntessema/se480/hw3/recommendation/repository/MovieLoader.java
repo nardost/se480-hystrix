@@ -49,8 +49,17 @@ public class MovieLoader {
             { "The Godfather", "17", "120" },
             { "Deadpool", "17", "120" },
             { "Saving Private Ryan", "17", "120" },
-            // more movies
+            // more kids' movies
             { "Shark Tale", "0", "13" },
             { "The Lion King", "0", "13" },
+            // more teens movies
+            { "Harry Potter", "13", "17" },
+            { "Jurassic Park", "13", "17" },
+            { "Avatar", "13", "17" },
+            // more adults' movies
+            { "Casablanca", "17", "120" },
+            { "Play it Again Sam", "17", "120" },
+            { "Schindler's List", "17", "120" },
+            { "Inglourious Basterds", "17", "120" }
     };
 }

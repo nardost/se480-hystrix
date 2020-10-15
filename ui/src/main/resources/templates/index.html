@@ -32,9 +32,12 @@
                 <!-- th:with must appear only once per element, hence the very long line of definition. -->
                 <div class="row row-cols-1 row-cols-md-3"
                      th:each="index : ${#numbers.sequence(0, #lists.size(movies), 3)}"
-                     th:with="themeTextColor=${theme == 'kids' ? 'text-success' : theme == 'teens' ? 'text-primary' : 'text-danger'}, themeButtonColor=${theme == 'kids' ? 'btn-success' : theme == 'teens' ? 'btn-primary' : 'btn-danger'}">
+                     th:with="
+                        themeTextColor=${theme == 'kids' ? 'text-success' : theme == 'teens' ? 'text-primary' : 'text-danger'},
+                        themeButtonColor=${theme == 'kids' ? 'btn-success' : theme == 'teens' ? 'btn-primary' : 'btn-danger'},
+                        themeBorderColor=${theme == 'kids' ? 'border-success' : theme == 'teens' ? 'border-primary' : 'border-danger'}">
                     <div th:if="${index < #lists.size(movies)}" class="col mb-4">
-                        <div class="card">
+                        <div class="card" th:classappend="${themeBorderColor}">
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film" th:classappend="${themeTextColor}"></i> [[${movies[index].title}]]</h5>
                                 <p class="font-weight-light text-muted card-text" th:inline="text">
@@ -56,7 +59,7 @@
                         </div>
                     </div>
                     <div th:if="${index + 1 < #lists.size(movies) and movies[index + 1] ne null}" class="col mb-4">
-                        <div class="card">
+                        <div class="card" th:classappend="${themeBorderColor}">
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film" th:classappend="${themeTextColor}"></i> [[${movies[index + 1].title}]]</h5>
                                 <p class="font-weight-light text-muted card-text" th:inline="text">
@@ -78,7 +81,7 @@
                         </div>
                     </div>
                     <div th:if="${index + 2 < #lists.size(movies) and movies[index + 2] ne null}" class="col mb-4">
-                        <div class="card">
+                        <div class="card" th:classappend="${themeBorderColor}">
                             <div class="card-body">
                                 <h5 class="card-title" th:inline="text"><i class="fas fa-film" th:classappend="${themeTextColor}"></i> [[${movies[index + 2].title}]]</h5>
                                 <p class="font-weight-light text-muted card-text" th:inline="text">
