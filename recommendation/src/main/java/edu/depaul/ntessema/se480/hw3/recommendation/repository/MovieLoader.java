@@ -31,7 +31,7 @@ public class MovieLoader {
                         Integer.parseInt(m[2]));
                 repository.save(movie);
             } catch (IllegalArgumentException ignored) {
-                log.error(String.format("%s is not saved. Ages must be integers.", m[0]));
+                log.error(String.format("%s is not saved. Age must be 0 or a positive integer.", m[0]));
             }
         });
     }

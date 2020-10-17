@@ -1,12 +1,14 @@
 package edu.depaul.ntessema.se480.hw3.recommendation.service;
 
 import edu.depaul.ntessema.se480.hw3.recommendation.model.Movie;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class RecommendationService {
 
     private final MovieService movieService;
@@ -19,6 +21,7 @@ public class RecommendationService {
     }
 
     public List<Movie> getRecommendedMovies(final String authToken) {
-        return movieService.findByAgeGroup(userService.getAuthenticatedUserDetail(authToken).getAge());
+        final int userDetail = userService.getAuthenticatedUserDetail(authToken).getAge();
+        return movieService.findByAgeGroup(userDetail);
     }
 }

@@ -1,6 +1,8 @@
 package edu.depaul.ntessema.se480.hw3.recommendation.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import edu.depaul.ntessema.se480.hw3.recommendation.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class RestClientUserService implements UserService {
 
     private final RestTemplate restTemplate;
@@ -25,27 +28,24 @@ public class RestClientUserService implements UserService {
     }
 
     @Override
+    @HystrixCommand(fallbackMethod = "fallbackMethod")
     public User getAuthenticatedUserDetail(String authToken) {
-        final String AUTH_USER_ENDPOINT = "http://localhost:8081/v1/user-detail";
+        final String userDetailServiceUri = "http://localhost:8081/v1/user-detail";
         /*
          * REST Web Client
          */
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("x-auth-token", authToken);
-            ResponseEntity<User> responseEntity = restTemplate.exchange(
-                    AUTH_USER_ENDPOINT,
-                    HttpMethod.GET,
-                    new HttpEntity<User>(headers),
-                    User.class);
-            final User user = responseEntity.getBody();
-            if (Objects.isNull(user)) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
-            return responseEntity.getBody();
-        } catch (RestClientException | ResponseStatusException exception) {
-            // TODO: what to do if user is not authenticated?
-            return new User("", 7);
-        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("x-auth-token", authToken);
+        ResponseEntity<User> responseEntity = restTemplate.exchange(
+                userDetailServiceUri,
+                HttpMethod.GET,
+                new HttpEntity<User>(headers),
+                User.class);
+        return responseEntity.getBody();
+    }
+
+    public User fallbackMethod(final String authToken) {
+        log.info("Fallback method is invoked.");
+        return new User("", 7);
     }
 }
