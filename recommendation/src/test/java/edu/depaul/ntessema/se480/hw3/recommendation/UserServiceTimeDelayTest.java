@@ -1,7 +1,6 @@
 package edu.depaul.ntessema.se480.hw3.recommendation;
 
 import edu.depaul.ntessema.se480.hw3.recommendation.model.User;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -56,7 +55,7 @@ public class UserServiceTimeDelayTest {
     @ValueSource(longs = { 0L, 10L, 20L, 40L, 50L })
     public void whenUserServiceDelayIsLessThanThresholdRecommenderCircuitIsClosed(long delay) throws Exception {
 
-        mockUserServiceDelayedResponse(delay);
+        mockDelayedUserServiceResponse(delay);
 
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", authToken))
                 .andExpect(status().isOk())
@@ -68,7 +67,7 @@ public class UserServiceTimeDelayTest {
     @ValueSource(longs = { 100L, 125L, 150L, 175L, 200L })
     public void whenUserServiceDelayExceedsThresholdRecommenderCircuitOpens(long delay) throws Exception {
 
-        mockUserServiceDelayedResponse(delay);
+        mockDelayedUserServiceResponse(delay);
 
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", authToken))
                 .andExpect(status().isOk())
@@ -76,7 +75,7 @@ public class UserServiceTimeDelayTest {
                 .andExpect(content().string(containsString("Coco")));
     }
 
-    private void mockUserServiceDelayedResponse(long delay) {
+    private void mockDelayedUserServiceResponse(long delay) {
         when(restTemplate.exchange(userDetailUri, HttpMethod.GET, httpEntity, User.class))
                 .thenAnswer((Answer<ResponseEntity<User>>) invocationOnMock -> {
                     TimeUnit.MILLISECONDS.sleep(delay);
