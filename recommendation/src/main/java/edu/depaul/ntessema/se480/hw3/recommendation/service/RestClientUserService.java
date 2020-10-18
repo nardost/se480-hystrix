@@ -24,7 +24,8 @@ public class RestClientUserService implements UserService {
     }
 
     /**
-     * https://github.com/Netflix/Hystrix/wiki/Configuration
+     * @see <a href="https://github.com/Netflix/Hystrix/wiki/Configuration"></a>
+     *
      * @param authToken the authentication token of the user
      * @return the user object containing user details (age only, for now).
      */

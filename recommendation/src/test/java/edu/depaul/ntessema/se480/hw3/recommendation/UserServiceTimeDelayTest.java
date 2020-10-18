@@ -2,6 +2,7 @@ package edu.depaul.ntessema.se480.hw3.recommendation;
 
 import edu.depaul.ntessema.se480.hw3.recommendation.model.User;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.stubbing.Answer;
@@ -36,17 +37,18 @@ public class UserServiceTimeDelayTest {
     @MockBean
     private RestTemplate restTemplate;
 
-    private static User adultUser;
-    private static HttpEntity<User> httpEntity;
-    private final static String authToken = "fake-authentication-token";
-    private final static String userDetailUri = "http://localhost:8081/v1/user-detail";
+    private User adultUser;
+    private HttpEntity<User> httpEntity;
+    private String authToken;
+    private String userDetailUri;
 
-    @BeforeAll
-    public static void init() {
+    @BeforeEach
+    public void init() {
+        authToken = "fake-authentication-token";
+        userDetailUri = "http://localhost:8081/v1/user-detail";
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-auth-token", authToken);
         httpEntity = new HttpEntity<>(headers);
-
         adultUser = new User("adult", 25);
     }
 
@@ -54,7 +56,7 @@ public class UserServiceTimeDelayTest {
     @ValueSource(longs = { 0L, 10L, 20L, 40L, 50L })
     public void whenUserServiceDelayIsLessThanThresholdRecommenderCircuitIsClosed(long delay) throws Exception {
 
-        mockUserServiceDelay(delay);
+        mockUserServiceDelayedResponse(delay);
 
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", authToken))
                 .andExpect(status().isOk())
@@ -66,7 +68,7 @@ public class UserServiceTimeDelayTest {
     @ValueSource(longs = { 100L, 125L, 150L, 175L, 200L })
     public void whenUserServiceDelayExceedsThresholdRecommenderCircuitOpens(long delay) throws Exception {
 
-        mockUserServiceDelay(delay);
+        mockUserServiceDelayedResponse(delay);
 
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", authToken))
                 .andExpect(status().isOk())
@@ -74,7 +76,7 @@ public class UserServiceTimeDelayTest {
                 .andExpect(content().string(containsString("Coco")));
     }
 
-    private void mockUserServiceDelay(long delay) {
+    private void mockUserServiceDelayedResponse(long delay) {
         when(restTemplate.exchange(userDetailUri, HttpMethod.GET, httpEntity, User.class))
                 .thenAnswer((Answer<ResponseEntity<User>>) invocationOnMock -> {
                     TimeUnit.MILLISECONDS.sleep(delay);
