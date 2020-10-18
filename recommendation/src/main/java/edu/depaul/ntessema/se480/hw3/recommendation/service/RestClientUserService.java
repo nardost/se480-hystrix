@@ -1,20 +1,16 @@
 package edu.depaul.ntessema.se480.hw3.recommendation.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import edu.depaul.ntessema.se480.hw3.recommendation.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Objects;
 
 @Service
 @Slf4j
@@ -27,13 +23,22 @@ public class RestClientUserService implements UserService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * https://github.com/Netflix/Hystrix/wiki/Configuration
+     * @param authToken the authentication token of the user
+     * @return the user object containing user details (age only, for now).
+     */
     @Override
-    @HystrixCommand(fallbackMethod = "fallbackMethod")
+    @HystrixCommand(
+            fallbackMethod = "getMadeUpUserUnder13YearsOfAge",
+            commandProperties = {
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "100")
+            }
+    )
     public User getAuthenticatedUserDetail(String authToken) {
+
         final String userDetailServiceUri = "http://localhost:8081/v1/user-detail";
-        /*
-         * REST Web Client
-         */
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-auth-token", authToken);
         ResponseEntity<User> responseEntity = restTemplate.exchange(
@@ -44,8 +49,16 @@ public class RestClientUserService implements UserService {
         return responseEntity.getBody();
     }
 
-    public User fallbackMethod(final String authToken) {
-        log.info("Fallback method is invoked.");
-        return new User("", 7);
+    /**
+     * This fallback method returns a made up user with age < 13
+     * so that the recommendation service recommends movies that
+     * are rated for kids under 13 years of age.
+     *
+     * @param authToken
+     * @return a made up user with age < 13.
+     */
+    public User getMadeUpUserUnder13YearsOfAge(final String authToken) {
+        log.error("User service failed. Fallback method is invoked.");
+        return new User("somePhantomKid", 7);
     }
 }

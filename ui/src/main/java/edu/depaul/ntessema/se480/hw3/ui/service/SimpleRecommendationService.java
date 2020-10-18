@@ -28,7 +28,9 @@ public class SimpleRecommendationService implements RecommendationService {
 
     @Override
     public List<Movie> getRecommendations(String token) {
+
         final String recommendationEndpoint = "http://localhost:8082/v1/recommend";
+
         try {
             HttpHeaders headers = new HttpHeaders();
             List<Movie> movies = new ArrayList<>();

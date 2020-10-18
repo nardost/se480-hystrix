@@ -11,6 +11,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -52,16 +53,15 @@ public class AuthenticationTokenService {
         return authToken;
     }
 
-    public User getAuthenticatedUserDetail(final String authToken) {
+    /**
+     * @param authToken
+     * @return
+     */
+    public int getAge(final String authToken) {
         final String id = issuedTokens.get(authToken);
         if(Objects.isNull(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        User u = userService.findById(id);
-        /*
-         * Don't send the password.
-         * TODO: improve with DTO
-         */
-        return new User(u.getId(), u.getUsername(), "", u.getAge());
+        return userService.findById(id).getAge();
     }
 }

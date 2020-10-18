@@ -28,7 +28,9 @@ public class SimpleAuthenticationService implements AuthenticationService {
 
     @Override
     public String authenticate(User user) {
+
         final String authenticationEndpoint = "http://localhost:8081/v1/auth";
+
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

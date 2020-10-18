@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -66,7 +65,13 @@ public class UserController {
     }
 
     @GetMapping("/user-detail")
-    public ResponseEntity<User> authenticatedUserDetail(@RequestHeader("x-auth-token") final String authToken) {
-        return new ResponseEntity<>(authTokenService.getAuthenticatedUserDetail(authToken), HttpStatus.OK);
+    public ResponseEntity<User> authenticatedUserDetail(
+            @RequestHeader("x-auth-token") final String authToken) {
+        /*
+         * Create a user object with all the details needed by the
+         * recommendation service (currently, only age is needed).
+         */
+        User user = new User("", "", "", authTokenService.getAge(authToken));
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

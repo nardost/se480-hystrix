@@ -22,7 +22,7 @@ public class MovieService {
         return repository
                 .findAll()
                 .stream()
-                .filter(movie -> movie.getMinimumAge() <= age && age < movie.getMaximumAge() )
+                .filter(movie -> movie.getMinimumAge() <= age && age < movie.getMaximumAge())
                 .collect(Collectors.toList());
     }
 }

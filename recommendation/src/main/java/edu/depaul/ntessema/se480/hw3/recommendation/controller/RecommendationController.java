@@ -27,8 +27,7 @@ public class RecommendationController {
 
     @GetMapping("/recommend")
     public ResponseEntity<List<Movie>> recommend(@RequestHeader("x-auth-token") final String authToken) {
-        List<Movie> recommendedMovies= recommendationService.getRecommendedMovies(authToken);
-        ResponseEntity<List<Movie>> responseEntity = new ResponseEntity<>(recommendedMovies, HttpStatus.OK);
-        return responseEntity;
+        List<Movie> recommendedMovies = recommendationService.getRecommendedMovies(authToken);
+        return new ResponseEntity<>(recommendedMovies, HttpStatus.OK);
     }
 }

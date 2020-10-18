@@ -22,6 +22,7 @@ public class RecommendationService {
 
     public List<Movie> getRecommendedMovies(final String authToken) {
         final int userDetail = userService.getAuthenticatedUserDetail(authToken).getAge();
+        log.info("User detail: age = " + userDetail);
         return movieService.findByAgeGroup(userDetail);
     }
 }
