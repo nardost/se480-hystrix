@@ -66,7 +66,7 @@ public class CircuitBreakerUnavailableUserServiceTest {
         final HttpHeaders headers = new HttpHeaders();
         headers.set("x-auth-token", authToken);
         final HttpEntity<User> httpEntity = new HttpEntity<>(headers);
-        System.out.println("Circuit Broken - Inside mocked unavailable service");
+
         when(restTemplate.exchange(userDetailUri, HttpMethod.GET, httpEntity, User.class))
                 .thenThrow(new RestClientException("simulating a broken user service - 404"));
     }

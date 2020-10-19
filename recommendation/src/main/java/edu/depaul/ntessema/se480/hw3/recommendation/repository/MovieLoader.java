@@ -58,7 +58,7 @@ public class MovieLoader {
             { "Avatar", "13", "17" },
             // more adults' movies
             { "Casablanca", "17", "120" },
-            { "Play it Again Sam", "17", "120" },
+            { "Play It Again Sam", "17", "120" },
             { "Schindler's List", "17", "120" },
             { "Inglourious Basterds", "17", "120" }
     };

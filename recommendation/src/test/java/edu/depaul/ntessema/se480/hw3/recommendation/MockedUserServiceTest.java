@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MockedUserServiceRecommendationServiceTest {
+public class MockedUserServiceTest {
 
     @Autowired
     private MockMvc mockMvc;

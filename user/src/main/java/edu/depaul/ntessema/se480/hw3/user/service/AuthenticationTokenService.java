@@ -30,10 +30,7 @@ public class AuthenticationTokenService {
     }
 
     public String issueAuthenticationToken(final User user) {
-        /*
-         * TODO
-         *  append expiration date on token
-         */
+
         final byte[] bytes = user.getId()
                 .concat(".")
                 .concat(user.getUsername())
@@ -43,7 +40,7 @@ public class AuthenticationTokenService {
         final String authToken = Base64.getEncoder().encodeToString(bytes);
         /*
          * If user has been issued a token
-         * previously just return the old token.
+         * previously, just return the old token.
          * Otherwise, add an entry to the issued
          * tokens map and return the token.
          */

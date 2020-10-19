@@ -38,10 +38,11 @@ public class UserLoader {
 
     private static final String[][] USERS = new String[][] {
             // { username, password, age }
-            { "joseph", "joseph", "6"},
-            { "nanu", "nanu", "14"},
-            { "nardos", "nardos", "20" },
-            { "kebede", "kebede", "30" },
-            { "menelik", "menelik", "60" }
+            { "stewie", "stewie", "6"},
+            { "meg", "meg", "12"},
+            { "mark", "mark", "13"},
+            { "carol", "carol", "16"},
+            { "bob", "bob", "17" },
+            { "linda", "linda", "30" }
     };
 }
