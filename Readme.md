@@ -1,8 +1,9 @@
 # A Movie Recommendation System
-The system is a movie recommendation system consisting of a user interface web application, UI, and two microservices: user, recommendation.
-The entire project is a multi-module Spring Boot Maven application with UI, user, recommendation as separate child modules (see figure 1).
 
-![Project Structure](docs/skeleton.png) 
+The system is a movie recommendation system consisting of a user interface web application, UI, and two microservices: user, recommendation.
+The entire project is a multi-module Spring Boot Maven application with ```UI, user, recommendation``` as separate child modules (see figure 1).
+
+![Project Structure](docs/project-structure.png) 
 
 *Figure 1. Project structure – a multi-module maven project.*
 
@@ -60,10 +61,9 @@ From the project root directory:
 ```$ mvn clean package```
 
 - An executable jar file is generated for each module (i.e. 3 in total).
-- The jar files are in the target/ directory of each module.
+- The jar files are in the ```target/``` directory of each module.
 
 ## Running the UI
-
 
 - Make sure ports ```8080, 8081, 8082``` are free.
 - Or configure the ports in the ```application.yml``` configuration files of the respective modules.
@@ -83,6 +83,7 @@ To run the user service, from the project root directory and on a separate termi
 OR
 
 ```$ mvn spring-boot:run -pl user```
+
 To run the recommendation service, from the project root directory and on a separate terminal window:
 
 ```$ java -jar recommendation/target/recommendation-0.0.1-SNAPSHOT.jar```
