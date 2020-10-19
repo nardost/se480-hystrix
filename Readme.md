@@ -1,7 +1,7 @@
 # A Movie Recommendation System
 
 The system is a movie recommendation system consisting of a user interface web application, UI, and two microservices: user, recommendation.
-The entire project is a multi-module Spring Boot Maven application with ```UI, user, recommendation``` as separate child modules (see figure 1).
+The entire project is a multi-module Spring Boot Maven application with ```UI, user, recommendation``` as separate child modules (*see figure 1*).
 
 ![Project Structure](docs/project-structure.png) 
 
@@ -26,7 +26,7 @@ The entire project is a multi-module Spring Boot Maven application with ```UI, u
 
 ###### Relevant Endpoints
 
-```GET: /v1/auth```
+```POST: /v1/auth```
 
 ## Recommendation Service
 
@@ -38,7 +38,7 @@ The entire project is a multi-module Spring Boot Maven application with ```UI, u
 
 ```GET: /v1/recommend```
 
-The sequence diagram in figure 2 depicts the interactions between the user, the UI, and the two microservices.
+The sequence diagram in *figure 2* depicts the interactions between the user, the UI, and the two microservices.
 
 ![Sequence Diagram](docs/movie-recommender.png)
 

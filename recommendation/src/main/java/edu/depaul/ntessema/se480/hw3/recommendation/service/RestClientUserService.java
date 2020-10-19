@@ -16,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class RestClientUserService implements UserService {
 
+    /**
+     * A rest web client is injected as a dependency.
+     */
     private final RestTemplate restTemplate;
 
     @Autowired
@@ -24,6 +27,11 @@ public class RestClientUserService implements UserService {
     }
 
     /**
+     * This method calls the remote user service and is the failure point
+     * we want to be handled by the Netflix Hystrix circuit breaker.
+     * The fallback method and the time delay threshold are configured in the
+     * HystrixCommand annotation.
+     *
      * @see <a href="https://github.com/Netflix/Hystrix/wiki/Configuration"></a>
      *
      * @param authToken the authentication token of the user
@@ -38,8 +46,14 @@ public class RestClientUserService implements UserService {
     )
     public User getAuthenticatedUserDetail(String authToken) {
 
+        /*
+         * The user service endpoint that gives user details.
+         */
         final String userDetailServiceUri = "http://localhost:8081/v1/user-detail";
-
+        /*
+         * Call the user service over http and build
+         * a response that bundles the user detail.
+         */
         HttpHeaders headers = new HttpHeaders();
         headers.set("x-auth-token", authToken);
         ResponseEntity<User> responseEntity = restTemplate.exchange(
@@ -55,7 +69,7 @@ public class RestClientUserService implements UserService {
      * so that the recommendation service recommends movies that
      * are rated for kids under 13 years of age.
      *
-     * @param authToken
+     * @param authToken the authentication token of the user.
      * @return a made up user with age < 13.
      */
     public User getMadeUpUserUnder13YearsOfAge(final String authToken) {

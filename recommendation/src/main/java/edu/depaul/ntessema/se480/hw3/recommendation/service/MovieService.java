@@ -18,6 +18,12 @@ public class MovieService {
         this.repository = repository;
     }
 
+    /**
+     * Get the list of movies that match the age of user.
+     *
+     * @param age the age of the authenticated user.
+     * @return the list of movies rated for that age.
+     */
     public List<Movie> findByAgeGroup(int age) {
         return repository
                 .findAll()

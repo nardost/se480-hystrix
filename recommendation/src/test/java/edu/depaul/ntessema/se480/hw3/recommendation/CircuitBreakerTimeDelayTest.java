@@ -33,6 +33,9 @@ public class CircuitBreakerTimeDelayTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Mock the RestTemplate REST client.
+     */
     @MockBean
     private RestTemplate restTemplate;
 
@@ -43,8 +46,14 @@ public class CircuitBreakerTimeDelayTest {
     public void whenUserServiceDelayIsLessThanThresholdCircuitIsClosedAndResponseIsNormal(long delay)
             throws Exception {
 
+        /*
+         * The response is an adult user with time delay < 100ms
+         */
         mockTimeDelayInUserServiceAndSendAdultUserInResponse(delay);
-
+        /*
+         * The time delay is below the threshold (100ms). So the circuit should
+         * stay closed, and the call should return movies for adults.
+         */
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", authToken))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -61,18 +70,30 @@ public class CircuitBreakerTimeDelayTest {
     public void whenUserServiceDelayExceedsThresholdCircuitBreaksAndResponseIsKidsRatedMovies(long delay)
             throws Exception {
 
+        /*
+         * The response is an adult user with some time delay > 100ms
+         */
         mockTimeDelayInUserServiceAndSendAdultUserInResponse(delay);
-
+        /*
+         * Delay exceeds the threshold (100ms). So the circuit breaker
+         * should open the circuit and the call should return
+         * movies rated for kids.
+         */
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", authToken))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().string(containsString("Coco")));
     }
 
+    /**
+     * Mock a user service that responds with some time delay.
+     */
     private void mockTimeDelayInUserServiceAndSendAdultUserInResponse(long delay) {
         final String userDetailUri = "http://localhost:8081/v1/user-detail";
         final HttpHeaders headers = new HttpHeaders();
         /*
+         * A study note:
+         *
          * The headers must be set BEFORE the HttpEntity is created
          * because HttpEntity constructor creates a new HttpHeaders object:
          * HttpHeaders tempHeaders = new HttpHeaders();
@@ -83,7 +104,9 @@ public class CircuitBreakerTimeDelayTest {
         headers.set("x-auth-token", authToken);
         final HttpEntity<User> httpEntity = new HttpEntity<>(headers);
         final User adultUser = new User("adult", 25);
-
+        /*
+         * Respond with time delay. Adult user is in the response.
+         */
         when(restTemplate.exchange(userDetailUri, HttpMethod.GET, httpEntity, User.class))
                 .thenAnswer((Answer<ResponseEntity<User>>) invocationOnMock -> {
                     TimeUnit.MILLISECONDS.sleep(delay);

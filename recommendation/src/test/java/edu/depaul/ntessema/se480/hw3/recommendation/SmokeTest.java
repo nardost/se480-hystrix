@@ -12,6 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests if the various user defined beans are loaded.
+ */
 @SpringBootTest
 public class SmokeTest {
 

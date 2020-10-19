@@ -35,17 +35,26 @@ public class CircuitBreakerUnavailableUserServiceTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Mock the RestTemplate REST client
+     */
     @MockBean
     private RestTemplate restTemplate;
-
+    /**
+     * an authentication token (could work if there is a live user service)
+     */
     private final String authToken = "NzM0ZGNjOGYtZjJkOS00YmVjLTk3MGQtMTM4ZDBhMWI0MGZkLm5hcmRvcy4yMA==";
 
     @Test
     public void whenUserServiceIsNotAvailableRecommenderCircuitBreaksAndResponseIsKidsRatedMovies()
             throws Exception {
-
+        /*
+         * The response is a RestClientException (404)
+         */
         mockUnavailableUserService();
-
+        /*
+         * mock a REST call to /v1/recommend and assert the results...
+         */
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", authToken))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Coco")));
@@ -56,8 +65,8 @@ public class CircuitBreakerUnavailableUserServiceTest {
      * throwing a RestClientException when the user service endpoint
      * /v1/user-detail is invoked.
      *
-     * The exception is equivalent to a 404 (not found) response
-     * and the circuit breaker is triggered.
+     * The exception is equivalent to a 404 (not found)
+     * response, which triggers the circuit breaker.
      */
     private void mockUnavailableUserService() {
 
@@ -66,7 +75,9 @@ public class CircuitBreakerUnavailableUserServiceTest {
         final HttpHeaders headers = new HttpHeaders();
         headers.set("x-auth-token", authToken);
         final HttpEntity<User> httpEntity = new HttpEntity<>(headers);
-
+        /*
+         * Mock a user service that is unavailable.
+         */
         when(restTemplate.exchange(userDetailUri, HttpMethod.GET, httpEntity, User.class))
                 .thenThrow(new RestClientException("simulating a broken user service - 404"));
     }

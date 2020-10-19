@@ -24,6 +24,9 @@ public class MockedUserServiceTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Mock the UserService
+     */
     @MockBean
     private UserService userService;
 
@@ -33,10 +36,14 @@ public class MockedUserServiceTest {
             throws Exception {
 
         final String kidAuthToken = "fake-kid-authentication-token";
-
+        /*
+         * Mock behavior of the user service - return a kid user for kid auth token.
+         */
         when(userService.getAuthenticatedUserDetail(kidAuthToken))
                 .thenReturn(new User(age + "-year-old-kid", age));
-
+        /*
+         * mock a client connection to the /v1/recommend endpoint and assert results...
+         */
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", kidAuthToken))
                 .andDo(print())
                 .andExpect(content().string(containsString("Coco")));
@@ -48,10 +55,14 @@ public class MockedUserServiceTest {
             throws Exception {
 
         final String teenAuthToken = "fake-teen-authentication-token";
-
+        /*
+         * Mock behavior of the user service - return a teen user for teen auth token.
+         */
         when(userService.getAuthenticatedUserDetail(teenAuthToken))
                 .thenReturn(new User(age + "-year-old-teen", age));
-
+        /*
+         * mock a client connection to the /v1/recommend endpoint and assert results...
+         */
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", teenAuthToken))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("The Avengers")));
@@ -63,10 +74,14 @@ public class MockedUserServiceTest {
             throws Exception {
 
         final String adultAuthToken = "fake-adult-authentication-token";
-
+        /*
+         * Mock behavior of the user service - return a kid user for adult auth token.
+         */
         when(userService.getAuthenticatedUserDetail(adultAuthToken))
                 .thenReturn(new User(age + "-year-old-adult", age));
-
+        /*
+         * mock a client connection to the /v1/recommend endpoint and assert results...
+         */
         mockMvc.perform(get("/v1/recommend").header("x-auth-token", adultAuthToken))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Deadpool")));

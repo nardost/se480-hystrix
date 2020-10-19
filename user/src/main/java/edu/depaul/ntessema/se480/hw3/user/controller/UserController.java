@@ -64,7 +64,7 @@ public class UserController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-auth-token", authToken);
         log.info(String.format("x-auth-token: %s%n", authToken));
-        return ResponseEntity.ok().headers(responseHeaders).body("");
+        return ResponseEntity.ok().headers(responseHeaders).build();
     }
 
     @GetMapping("/user-detail")
