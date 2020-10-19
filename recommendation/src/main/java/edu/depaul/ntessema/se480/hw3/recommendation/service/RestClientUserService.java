@@ -59,7 +59,7 @@ public class RestClientUserService implements UserService {
      * @return a made up user with age < 13.
      */
     public User getMadeUpUserUnder13YearsOfAge(final String authToken) {
-        log.error("User service failed. Fallback method is invoked.");
-        return new User("somePhantomKid", 7);
+        log.error("Circuit Broken: user service failed.");
+        return new User("kid", 7);
     }
 }

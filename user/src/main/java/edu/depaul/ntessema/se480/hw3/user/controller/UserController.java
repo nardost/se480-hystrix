@@ -3,6 +3,7 @@ package edu.depaul.ntessema.se480.hw3.user.controller;
 import edu.depaul.ntessema.se480.hw3.user.model.User;
 import edu.depaul.ntessema.se480.hw3.user.service.AuthenticationTokenService;
 import edu.depaul.ntessema.se480.hw3.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1")
+@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -61,6 +63,7 @@ public class UserController {
         final String authToken = authTokenService.issueAuthenticationToken(user);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("x-auth-token", authToken);
+        log.info(String.format("x-auth-token: %s%n", authToken));
         return ResponseEntity.ok().headers(responseHeaders).body("");
     }
 
@@ -72,6 +75,7 @@ public class UserController {
          * recommendation service (currently, only age is needed).
          */
         User user = new User("", "", "", authTokenService.getAge(authToken));
+        log.info("age = " + user.getAge());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
