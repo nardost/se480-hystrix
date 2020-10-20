@@ -47,7 +47,7 @@ public class RestClientUserService implements UserService {
     public User getAuthenticatedUserDetail(String authToken) {
 
         /*
-         * The user service endpoint that gives user details.
+         * The user service endpoint that returns user details.
          */
         final String userDetailServiceUri = "http://localhost:8081/v1/user-detail";
         /*
@@ -73,7 +73,7 @@ public class RestClientUserService implements UserService {
      * @return a made up user with age < 13.
      */
     public User getMadeUpUserUnder13YearsOfAge(final String authToken) {
-        log.error("Circuit Broken: user service failed.");
+        log.error("Circuit broken: user service failed.");
         return new User("kid", 7);
     }
 }

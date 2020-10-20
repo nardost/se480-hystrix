@@ -34,6 +34,7 @@ public class MovieLoader {
                 log.error(String.format("%s is not saved. Age must be 0 or a positive integer.", m[0]));
             }
         });
+        log.info(repository.findAll().size() + " movies loaded into the in-memory database");
     }
 
     /**

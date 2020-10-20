@@ -13,6 +13,9 @@ public class MovieRecommenderUIApplication {
         SpringApplication.run(MovieRecommenderUIApplication.class, args);
     }
 
+    /**
+     * The REST client bean
+     */
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder.build();

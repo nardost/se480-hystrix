@@ -26,7 +26,9 @@ The entire project is a multi-module Spring Boot Maven application with ```UI, u
 
 ###### Relevant Endpoints
 
-```POST: /v1/auth```
+```POST: /v1/auth``` (requires ```username``` and ```password``` parameters in request body.)
+
+```GET: /v1/user-detail``` (requires the ```x-auth-token``` request header.)
 
 ## Recommendation Service
 

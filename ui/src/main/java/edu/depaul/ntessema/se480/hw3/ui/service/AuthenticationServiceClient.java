@@ -17,18 +17,27 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class SimpleAuthenticationService implements AuthenticationService {
+public class AuthenticationServiceClient implements AuthenticationService {
 
     private final RestTemplate restTemplate;
 
     @Autowired
-    public SimpleAuthenticationService(RestTemplate restTemplate) {
+    public AuthenticationServiceClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Contact the user authentication service over HTTP
+     * and get authentication token string for the user.
+     *
+     * @param user the user
+     * @return the authentication token string for the user
+     */
     @Override
     public String authenticate(User user) {
-
+        /*
+         * The authentication service endpoint
+         */
         final String authenticationEndpoint = "http://localhost:8081/v1/auth";
 
         try {
@@ -45,8 +54,8 @@ public class SimpleAuthenticationService implements AuthenticationService {
                     String.class);
             return responseEntity.getHeaders().getFirst("x-auth-token");
         } catch (RestClientException rce) {
-            log.error("Rest client failed...");
-            return "error";
+            log.error("User could not be authenticated: " + user.getUsername());
+            return "";
         }
     }
 }

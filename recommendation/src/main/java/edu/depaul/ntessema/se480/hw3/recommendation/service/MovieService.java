@@ -31,4 +31,12 @@ public class MovieService {
                 .filter(movie -> movie.getMinimumAge() <= age && age < movie.getMaximumAge())
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Get all available movies (for administration purposes only).
+     * @return list of all movies
+     */
+    public List<Movie> findAll() {
+        return repository.findAll();
+    }
 }

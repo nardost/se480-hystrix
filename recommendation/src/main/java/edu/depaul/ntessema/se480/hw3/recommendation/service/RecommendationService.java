@@ -44,4 +44,12 @@ public class RecommendationService {
          */
         return movieService.findByAgeGroup(userDetail);
     }
+
+    /**
+     * For administration purposes only
+     * @return list of all available movies
+     */
+    public List<Movie> getAllMovies() {
+        return movieService.findAll();
+    }
 }

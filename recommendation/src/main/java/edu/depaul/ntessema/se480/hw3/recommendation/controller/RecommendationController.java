@@ -25,9 +25,24 @@ public class RecommendationController {
         this.recommendationService = service;
     }
 
+    /**
+     * The movie recommender endpoint.
+     * @param authToken the auth token of user
+     * @return list of movies rated for user.
+     */
     @GetMapping("/recommend")
     public ResponseEntity<List<Movie>> recommend(@RequestHeader("x-auth-token") final String authToken) {
         List<Movie> recommendedMovies = recommendationService.getRecommendedMovies(authToken);
         return new ResponseEntity<>(recommendedMovies, HttpStatus.OK);
+    }
+
+    /**
+     * We don't need this for the homework. Just for the sake of
+     * completeness ... Or for administration purposes.
+     * @return list of all available movies.
+     */
+    @GetMapping("/movies")
+    public ResponseEntity<List<Movie>> getAllMovies() {
+        return new ResponseEntity<>(recommendationService.getAllMovies(), HttpStatus.OK);
     }
 }

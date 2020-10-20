@@ -17,18 +17,27 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class SimpleRecommendationService implements RecommendationService {
+public class RecommendationServiceClient implements RecommendationService {
 
     private final RestTemplate restTemplate;
 
     @Autowired
-    public SimpleRecommendationService(RestTemplate restTemplate) {
+    public RecommendationServiceClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Send authentication token to the recommendation service
+     * over HTTP and get the list of recommended movies.
+     *
+     * @param token the authentication token string
+     * @return the list of recommended movies
+     */
     @Override
     public List<Movie> getRecommendations(String token) {
-
+        /*
+         * The recommender service endpoint.
+         */
         final String recommendationEndpoint = "http://localhost:8082/v1/recommend";
 
         try {
@@ -47,7 +56,7 @@ public class SimpleRecommendationService implements RecommendationService {
             }
             return movies;
         } catch (RestClientException rce) {
-            log.error("Recommendation Service Error");
+            log.error("Recommendation service is not available.");
             return new ArrayList<>();
         }
     }

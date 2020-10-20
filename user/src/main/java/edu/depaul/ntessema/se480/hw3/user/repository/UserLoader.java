@@ -34,6 +34,7 @@ public class UserLoader {
                 log.error(String.format("User %s not saved. Age must be an integer.", u[0]));
             }
         });
+        log.info(repository.findAll().size() + " users loaded into the in-memory database");
     }
 
     private static final String[][] USERS = new String[][] {
